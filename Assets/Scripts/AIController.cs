@@ -8,6 +8,7 @@ namespace FinskaVR
     public class AIController : MonoBehaviour
     {
         [SerializeField] private GameManager gameManager;
+        [SerializeField] private PinReset pinResetter;
         [SerializeField] private Transform throwPoint;
         [SerializeField] private GameObject[] pins;
         [SerializeField] private Transform log;
@@ -37,9 +38,10 @@ namespace FinskaVR
             yield return new WaitForSecondsRealtime(1f);
             log.position = throwPoint.position;
             gameManager.EnableLogThrowDetectorAfterWait();
+            pinResetter.ResetPins();
             _logRigidbody.isKinematic = true;
 
-            yield return new WaitForSecondsRealtime(2f);
+            yield return new WaitForSecondsRealtime(3f);
             _logRigidbody.isKinematic = false;
             _logRigidbody.velocity = new Vector3((target-throwPoint.position).x * 2, 0.51f, (target-throwPoint.position).z * 2);
         }

@@ -33,7 +33,7 @@ namespace FinskaVR
 
             if (playerScores[currentPlayer] == 50)
             {
-                // WIN
+                EventManager.OnGameOver?.Invoke(currentPlayer.ToString());
             }
             else if (playerScores[currentPlayer] > 50)
             {
@@ -47,9 +47,9 @@ namespace FinskaVR
                 if (score == 0) _consecutiveHumanMisses++;
                 else _consecutiveHumanMisses = 0;
 
-                if (_consecutiveHumanMisses == 3)
+                if (_consecutiveHumanMisses == 5)
                 {
-                    // AI WIN
+                    EventManager.OnGameOver?.Invoke("AI");
                 }
 
                 log.GetComponent<DistanceGrabInteractable>().enabled = false;
@@ -65,9 +65,9 @@ namespace FinskaVR
                 if (score == 0) _consecutiveAIMisses++;
                 else _consecutiveAIMisses = 0;
 
-                if (_consecutiveAIMisses == 3)
+                if (_consecutiveAIMisses == 5)
                 {
-                    // HUMAN WIN
+                    EventManager.OnGameOver?.Invoke("Human");
                 }
 
                 log.GetComponent<DistanceGrabInteractable>().enabled = true;
@@ -89,6 +89,12 @@ namespace FinskaVR
             yield return new WaitForSecondsRealtime(1f);
             logThrowDetector.SetActive(true);
             Debug.Log("Log throw detector enabled.");
+        }
+
+        private void Update()
+        {
+            // log respawn
+            if (log.transform.position.y < -2f) log.transform.position = new Vector3(0f, 0.12f, 0.44f);
         }
 
         private void OnEnable()

@@ -12,5 +12,6 @@ namespace FinskaVR
         public static Action<int> OnTurnEnd;
         public static Action<int, int> OnScoreUpdate;
         public static Action OnAITurn;
+        public static Action<string> OnGameOver;
     }
 }
