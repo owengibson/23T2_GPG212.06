@@ -9,18 +9,18 @@ namespace FinskaVR
     {
         [SerializeField] private TextMeshProUGUI pinText;
 
-        private int _pinValue;
+        public int pinValue;
 
         private void Start()
         {
-            _pinValue = int.Parse(pinText.text);
+            pinValue = int.Parse(pinText.text);
         }
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Ground"))
             {
-                EventManager.OnPinKnockOver?.Invoke(_pinValue);
-                Debug.Log($"Pin number {_pinValue} knocked down");
+                EventManager.OnPinKnockOver?.Invoke(pinValue);
+                Debug.Log($"Pin number {pinValue} knocked down");
             }
         }
     }

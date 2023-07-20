@@ -12,13 +12,13 @@ namespace FinskaVR
 
         public int roundNumber = 0;
         public PlayerType currentPlayer = PlayerType.Human;
+        public Dictionary<PlayerType, int> playerScores = new() { { PlayerType.Human, 0 }, { PlayerType.AI, 0 } };
 
         [SerializeField] private GameObject logThrowDetector;
         [SerializeField] private GameObject log;
         [SerializeField] private TextMeshProUGUI humanText;
         [SerializeField] private TextMeshProUGUI aiText;
 
-        private Dictionary<PlayerType, int> playerScores = new() { { PlayerType.Human, 0 }, { PlayerType.AI, 0 } };
         private int _consecutiveHumanMisses = 0;
         private int _consecutiveAIMisses = 0;
 
