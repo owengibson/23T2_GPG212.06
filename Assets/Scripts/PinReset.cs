@@ -6,11 +6,14 @@ namespace FinskaVR
 {
     public class PinReset : MonoBehaviour
     {
+        [SerializeField] private TurnScoreManager turnScoreManager;
+
         private const float _groundPosition = 0.0765f;
 
         public void ResetPins()
         {
             StartCoroutine(ResetPinsAfterWait());
+            turnScoreManager.ResetScores();
         }
 
         private IEnumerator ResetPinsAfterWait()

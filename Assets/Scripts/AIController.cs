@@ -13,7 +13,7 @@ namespace FinskaVR
         [SerializeField] private GameObject[] pins;
         [SerializeField] private Transform log;
 
-        private float _generalMaxThrowOffset = 0.15f;
+        private float _randomMaxThrowOffset = 0.15f;
         private float _singleMaxThrowOffset = 0.2f;
         private float _targetHeight = 0.1f;
 
@@ -27,9 +27,9 @@ namespace FinskaVR
         {
             Vector3 target;
             int currentScore = gameManager.playerScores[GameManager.PlayerType.AI];
-            if (50 - currentScore <= 12 && Random.Range(1,2) == 2)
+            if (50 - currentScore <= 12)
             {
-                // target single pin
+                // target specific pin
                 int needed = 50 - currentScore;
                 Vector3 chosenPin = Vector3.zero;
                 foreach(var pin in pins)
@@ -48,10 +48,10 @@ namespace FinskaVR
             }
             else
             {
-                // target general area
+                // target random pin
                 Vector3 chosenPin = pins[Random.Range(0, pins.Length)].transform.position;
-                Vector2 bottomLeft = new Vector2(chosenPin.x - _generalMaxThrowOffset, chosenPin.z - _generalMaxThrowOffset);
-                Vector2 topRight = new Vector2(chosenPin.x + _generalMaxThrowOffset, chosenPin.z + _generalMaxThrowOffset);
+                Vector2 bottomLeft = new Vector2(chosenPin.x - _randomMaxThrowOffset, chosenPin.z - _randomMaxThrowOffset);
+                Vector2 topRight = new Vector2(chosenPin.x + _randomMaxThrowOffset, chosenPin.z + _randomMaxThrowOffset);
                 Vector2 targetXZ = Utils.RandomRangeVector2(bottomLeft, topRight);
                 target = new Vector3(targetXZ.x, _targetHeight, targetXZ.y);
             }
@@ -70,7 +70,8 @@ namespace FinskaVR
 
             yield return new WaitForSecondsRealtime(3f);
             _logRigidbody.isKinematic = false;
-            _logRigidbody.velocity = new Vector3((target-throwPoint.position).x * 2, 0.51f, (target-throwPoint.position).z * 2);
+            Vector3 targetVelocity = Vector3.ClampMagnitude(new Vector3((target - throwPoint.position).x * 2, 0.51f, (target - throwPoint.position).z * 2), 7f);
+            _logRigidbody.velocity = targetVelocity;
         }
 
         private void DisableAI(string x)

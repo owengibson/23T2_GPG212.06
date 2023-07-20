@@ -52,7 +52,7 @@ namespace FinskaVR
                     EventManager.OnGameOver?.Invoke("AI");
                 }
 
-                log.GetComponent<DistanceGrabInteractable>().enabled = false;
+                ToggleLogGrabbableComponents(false);
                 currentPlayer = PlayerType.AI;
 
                 humanText.color = Color.black;
@@ -70,7 +70,7 @@ namespace FinskaVR
                     EventManager.OnGameOver?.Invoke("Human");
                 }
 
-                log.GetComponent<DistanceGrabInteractable>().enabled = true;
+                ToggleLogGrabbableComponents(true);
                 currentPlayer = PlayerType.Human;
 
                 aiText.color = Color.black;
@@ -78,6 +78,14 @@ namespace FinskaVR
 
                 roundNumber++;
             }
+        }
+
+        private void ToggleLogGrabbableComponents(bool isGrabbable)
+        {
+            log.GetComponent<DistanceGrabInteractable>().enabled = isGrabbable;
+            log.GetComponent<PhysicsGrabbable>().enabled = isGrabbable;
+            log.GetComponent<Grabbable>().enabled = isGrabbable;
+
         }
 
         public void EnableLogThrowDetectorAfterWait()

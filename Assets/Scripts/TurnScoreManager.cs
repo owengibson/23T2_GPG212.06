@@ -29,7 +29,7 @@ namespace FinskaVR
             _pinValue = pinValue;
         }
 
-        private void ResetScores()
+        public void ResetScores()
         {
             _noOfPinsKnockedOver = 0;
             _pinValue = 0;

@@ -16,17 +16,17 @@ namespace FinskaVR
         [Space]
 
         [Header("Object References")]
-        [SerializeField] private Rigidbody log;
+        [SerializeField] private GameObject log;
 
         void Start()
         {
-            log.isKinematic = true;
+            log.SetActive(false);
         }
 
         public void Play()
         {
             mainMenu.SetActive(false);
-            log.isKinematic = false;
+            log.SetActive(true);
         }
 
         public void OpenTutorial()
@@ -47,7 +47,7 @@ namespace FinskaVR
         private void GameOverScreen(string winner)
         {
             gameOverScreen.SetActive(true);
-            log.isKinematic = true;
+            log.SetActive(false);
 
             if (winner == "Human") winnerText.text = "You win!";
             else if (winner == "AI") winnerText.text = "AI wins!";
